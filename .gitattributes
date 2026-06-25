@@ -1,0 +1,24 @@
+* text=auto
+*.cfg text eol=lf
+*.gd text eol=lf
+*.godot text eol=lf
+*.import text eol=lf
+*.md text eol=lf
+*.plist text eol=lf
+*.tscn text eol=lf
+*.svg text eol=lf
+*.png binary
+*.ctex binary
+
+# Keep GitHub-generated release archives focused on the installable addon.
+/.gitattributes export-ignore
+/.gitignore export-ignore
+/.godot export-ignore
+/icon.svg export-ignore
+/icon.svg.import export-ignore
+/main.tscn export-ignore
+/particle export-ignore
+/plist export-ignore
+/project.godot export-ignore
+/RELEASE_CHECKLIST.md export-ignore
+/STORE_LISTING.md export-ignore

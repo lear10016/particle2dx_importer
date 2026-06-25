@@ -1,21 +1,12 @@
 # Particle2DX Importer
 
-Particle2DX Importer is a Godot 4 editor plugin and command-line converter for Cocos2d-x ParticleDesigner `.plist` particle effects. It creates Godot `GPUParticles2D` scenes and writes recovered textures next to the generated scene.
-
-## Features
-
-- Converts ParticleDesigner plist files to `GPUParticles2D` scenes.
-- Decodes embedded `textureImageData` stored as raw, gzip, or deflate base64 image bytes.
-- Supports external plist textures referenced by `textureFileName`.
-- Maps gravity mode, radius mode, particle lifetime, emission shape, color ramps, scale curves, rotation, acceleration, source variance, and common blend modes.
-- Provides an editor menu item for one-off conversion and a headless CLI script for batch conversion.
-- Names embedded textures from the generated scene, such as `fire_0.png`, so multiple plist files do not overwrite each other.
+Particle2DX Importer converts Cocos2d-x ParticleDesigner `.plist` particle effects into Godot 4 `GPUParticles2D` scenes.
 
 ## Requirements
 
-- Godot 4.x. The plugin is tested in Godot 4.7.
-- A Cocos2d-x ParticleDesigner plist file.
-- Embedded or adjacent PNG, JPEG, or WebP texture data.
+- Godot 4.x
+- A Cocos2d-x ParticleDesigner plist file
+- Embedded texture data or an adjacent PNG, JPEG, or WebP texture referenced by `textureFileName`
 
 ## Installation
 
@@ -26,10 +17,18 @@ Particle2DX Importer is a Godot 4 editor plugin and command-line converter for C
 ## Editor Usage
 
 1. Choose `Project > Tools > Convert Particle2D Plist...`.
-2. Pick a `.plist` file from disk.
+2. Select a source `.plist` file.
 3. Choose a `res://` `.tscn` output path.
 
-The plugin writes decoded textures next to the scene, requests texture import, refreshes the filesystem, and opens the generated scene.
+The generated scene is saved as a `GPUParticles2D` root node. If the plist contains embedded texture data, the decoded texture is written next to the generated scene and imported by Godot.
+
+## Batch Editor Usage
+
+1. Choose `Project > Tools > Convert Particle2D Plist Folder...`.
+2. Select a filesystem folder that contains `.plist` files.
+3. Select a `res://` output folder for the converted scenes.
+
+The plugin converts every `.plist` file in the selected folder, writes each scene into the chosen `res://` directory, and shows a summary of successes, warnings, and failures when the batch completes.
 
 ## Command Line Usage
 
@@ -40,7 +39,7 @@ godot --headless \
   -- /path/to/particle.plist res://converted_particles/particle.tscn
 ```
 
-Named arguments are also supported:
+Named arguments:
 
 ```bash
 godot --headless \
@@ -64,12 +63,12 @@ godot --headless \
 ## Conversion Notes
 
 - Cocos uses a y-up particle angle/gravity convention, so y values are flipped for Godot 2D.
-- `sourcePositionx/y` is ignored by default so the effect can be instanced at the scene origin. Use `--preserve-source-position` to keep it.
-- Finite Cocos `duration` is treated as the emitter's active emission window, not particle lifetime.
-- Radius mode uses a custom particles shader so `maxRadius`, `minRadius`, `rotatePerSecond`, and related variances follow Cocos' per-particle orbit behavior more closely.
-- Gravity mode maps `startColor`/`finishColor` to a lifetime `color_ramp`; color and size variance are approximated where Godot exposes different randomization controls.
-- Exported PNG textures are rewritten from decoded pixels, stripped of ancillary metadata chunks, and tagged with an `Author=AI` PNG text chunk.
+- `sourcePositionx/y` is ignored by default so the converted effect can be instanced at the scene origin. Use `--preserve-source-position` to keep it.
+- Finite Cocos `duration` is treated as the active emission window, not particle lifetime.
+- Radius mode uses a custom particles shader to approximate `maxRadius`, `minRadius`, `rotatePerSecond`, and related variances.
+- Gravity mode maps `startColor` and `finishColor` to a lifetime `color_ramp`. Color and size variance are approximated where Godot exposes different randomization controls.
+- Embedded PNG textures are rewritten from decoded pixels and stripped of ancillary metadata chunks.
 
 ## License
 
-This addon is available under the MIT License. See `LICENSE` for details.
+MIT License. See `LICENSE`.

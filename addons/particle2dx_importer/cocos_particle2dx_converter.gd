@@ -3,7 +3,6 @@ extends RefCounted
 
 const DEFAULT_OUTPUT_DIR := "res://converted_particles"
 const SUPPORTED_IMAGE_EXTENSIONS := ["png", "jpg", "jpeg", "webp"]
-const AI_AUTHOR_MARK := "AI"
 
 var _warnings: Array[String] = []
 var _error := ""
@@ -138,8 +137,7 @@ func _resolve_texture(plist: Dictionary, input_path: String, output_scene_path: 
 			String(plist["textureImageData"]),
 			texture_output,
 			use_indexed_name,
-			options.get("editor_file_system", null),
-			String(options.get("ai_author", AI_AUTHOR_MARK))
+			options.get("editor_file_system", null)
 		)
 
 	var texture_name := String(plist.get("textureFileName", ""))
@@ -166,7 +164,7 @@ func _resolve_texture(plist: Dictionary, input_path: String, output_scene_path: 
 		"format": source_texture_path.get_extension().to_lower()
 	}
 
-func _write_embedded_texture(encoded: String, texture_output: String, use_indexed_name: bool, editor_file_system: Object = null, ai_author: String = AI_AUTHOR_MARK) -> Dictionary:
+func _write_embedded_texture(encoded: String, texture_output: String, use_indexed_name: bool, editor_file_system: Object = null) -> Dictionary:
 	var base64_text := encoded.strip_edges()
 	var raw := Marshalls.base64_to_raw(base64_text)
 	if raw.is_empty():
@@ -190,7 +188,7 @@ func _write_embedded_texture(encoded: String, texture_output: String, use_indexe
 		"png":
 			err = image.save_png(save_path)
 			if err == OK:
-				err = _sanitize_png_metadata_and_add_author(save_path, ai_author)
+				err = _sanitize_png_metadata(save_path)
 		"jpg", "jpeg":
 			err = image.save_jpg(save_path)
 		"webp":
@@ -250,7 +248,7 @@ func _load_image_from_bytes(image: Image, bytes: PackedByteArray) -> String:
 		return "webp"
 	return ""
 
-func _sanitize_png_metadata_and_add_author(path: String, ai_author: String) -> Error:
+func _sanitize_png_metadata(path: String) -> Error:
 	var file := FileAccess.open(path, FileAccess.READ)
 	if file == null:
 		return FileAccess.get_open_error()
@@ -262,8 +260,7 @@ func _sanitize_png_metadata_and_add_author(path: String, ai_author: String) -> E
 
 	var output := _png_signature()
 	var offset := 8
-	var author_chunk := _make_png_text_chunk("Author", ai_author)
-	var inserted_author := false
+	var found_iend := false
 
 	while offset + 12 <= png_bytes.size():
 		var length := _read_u32_be(png_bytes, offset)
@@ -275,10 +272,8 @@ func _sanitize_png_metadata_and_add_author(path: String, ai_author: String) -> E
 		var chunk_end := offset + 12 + length
 
 		if chunk_type == "IEND":
-			if not inserted_author:
-				output.append_array(author_chunk)
-				inserted_author = true
 			output.append_array(png_bytes.slice(offset, chunk_end))
+			found_iend = true
 			break
 
 		if not _should_strip_png_chunk(chunk_type):
@@ -286,7 +281,7 @@ func _sanitize_png_metadata_and_add_author(path: String, ai_author: String) -> E
 
 		offset = chunk_end
 
-	if not inserted_author:
+	if not found_iend:
 		return ERR_INVALID_DATA
 
 	file = FileAccess.open(path, FileAccess.WRITE)
@@ -316,25 +311,6 @@ func _should_strip_png_chunk(chunk_type: String) -> bool:
 	var first := chunk_type.substr(0, 1)
 	return first == first.to_lower()
 
-func _make_png_text_chunk(keyword: String, value: String) -> PackedByteArray:
-	var data := PackedByteArray()
-	data.append_array(keyword.to_ascii_buffer())
-	data.append(0)
-	data.append_array(value.to_ascii_buffer())
-	return _make_png_chunk("tEXt", data)
-
-func _make_png_chunk(chunk_type: String, data: PackedByteArray) -> PackedByteArray:
-	var chunk := PackedByteArray()
-	chunk.append_array(_u32_be(data.size()))
-	chunk.append_array(chunk_type.to_ascii_buffer())
-	chunk.append_array(data)
-
-	var crc_input := PackedByteArray()
-	crc_input.append_array(chunk_type.to_ascii_buffer())
-	crc_input.append_array(data)
-	chunk.append_array(_u32_be(_crc32(crc_input)))
-	return chunk
-
 func _read_u32_be(bytes: PackedByteArray, offset: int) -> int:
 	return (
 		(int(bytes[offset]) << 24)
@@ -342,25 +318,6 @@ func _read_u32_be(bytes: PackedByteArray, offset: int) -> int:
 		| (int(bytes[offset + 2]) << 8)
 		| int(bytes[offset + 3])
 	)
-
-func _u32_be(value: int) -> PackedByteArray:
-	return PackedByteArray([
-		(value >> 24) & 0xff,
-		(value >> 16) & 0xff,
-		(value >> 8) & 0xff,
-		value & 0xff
-	])
-
-func _crc32(bytes: PackedByteArray) -> int:
-	var crc := 0xffffffff
-	for byte in bytes:
-		crc = crc ^ int(byte)
-		for _bit in range(8):
-			if (crc & 1) != 0:
-				crc = (crc >> 1) ^ 0xedb88320
-			else:
-				crc = crc >> 1
-	return (crc ^ 0xffffffff) & 0xffffffff
 
 func _import_texture_file(path: String, editor_file_system: Object = null) -> void:
 	if not path.begins_with("res://"):
