@@ -1,31 +1,31 @@
-[gd_scene format=3 uid="uid://6p601bxm5ktm"]
+[gd_scene format=3 uid="uid://cimxfxsoqfurh"]
 
-[ext_resource type="Texture2D" uid="uid://cqhwophqlp1ww" path="res://particle/ribbon2_0.png" id="1_mwghn"]
+[ext_resource type="Texture2D" uid="uid://m2o4npwoa62e" path="res://particle/ribbon2_0.png" id="1_mwghn"]
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_falcy"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_mwghn"]
 blend_mode = 1
 
-[sub_resource type="Gradient" id="Gradient_n0mdb"]
+[sub_resource type="Gradient" id="Gradient_falcy"]
 offsets = PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.4, 0.46666667, 0.53333336, 0.6, 0.6666667, 0.73333335, 0.8, 0.8666667, 0.93333334, 1)
 colors = PackedColorArray(1, 1, 1, 0.8, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.9373778, 1, 1, 1, 0.8995514, 1, 1, 1, 1, 1, 1, 1, 0.8487044, 1, 1, 1, 0.91753, 1, 1, 1, 0.9613382, 1, 1, 1, 0.9800954, 1, 1, 1, 0.9868912, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.956705, 1, 1, 1, 0.9461808, 1, 1, 1, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_y3lv8"]
-gradient = SubResource("Gradient_n0mdb")
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_n0mdb"]
+gradient = SubResource("Gradient_falcy")
 
-[sub_resource type="Gradient" id="Gradient_ni1eo"]
+[sub_resource type="Gradient" id="Gradient_y3lv8"]
 colors = PackedColorArray(1, 0, 0, 1, 0, 0.75, 0.34, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_13g6c"]
-gradient = SubResource("Gradient_ni1eo")
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ni1eo"]
+gradient = SubResource("Gradient_y3lv8")
 
-[sub_resource type="Curve" id="Curve_urckl"]
+[sub_resource type="Curve" id="Curve_13g6c"]
 _data = [Vector2(0, 0.37555858), 0.0, -0.1211183, 0, 1, Vector2(1, 0.25444028), -0.1211183, 0.0, 1, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_761p7"]
-curve = SubResource("Curve_urckl")
+[sub_resource type="CurveTexture" id="CurveTexture_urckl"]
+curve = SubResource("Curve_13g6c")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_s67x5"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_761p7"]
 particle_flag_disable_z = true
 emission_shape = 3
 emission_box_extents = Vector3(481, 390, 0)
@@ -42,14 +42,14 @@ tangential_accel_min = 77.0
 tangential_accel_max = 127.0
 scale_min = 0.27837837
 scale_max = 1.7216216
-scale_curve = SubResource("CurveTexture_761p7")
-color_ramp = SubResource("GradientTexture1D_13g6c")
-color_initial_ramp = SubResource("GradientTexture1D_y3lv8")
+scale_curve = SubResource("CurveTexture_urckl")
+color_ramp = SubResource("GradientTexture1D_ni1eo")
+color_initial_ramp = SubResource("GradientTexture1D_n0mdb")
 
-[node name="Particle2D" type="GPUParticles2D" unique_id=400901734]
-material = SubResource("CanvasItemMaterial_falcy")
+[node name="Particle2D" type="GPUParticles2D" unique_id=669816930]
+material = SubResource("CanvasItemMaterial_mwghn")
 amount = 33
 texture = ExtResource("1_mwghn")
 lifetime = 1.07
 visibility_rect = Rect2(-1181.5522, -1181.5522, 2363.1045, 2363.1045)
-process_material = SubResource("ParticleProcessMaterial_s67x5")
+process_material = SubResource("ParticleProcessMaterial_761p7")

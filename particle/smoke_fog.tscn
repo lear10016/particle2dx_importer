@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://ty6r7jy0bbbv"]
+
+[ext_resource type="Texture2D" uid="uid://blro2licptt2n" path="res://particle/smoke_fog_0.png" id="1_qr1u4"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_qr1u4"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_fett5"]
+colors = PackedColorArray(1, 1, 0.75, 0.05, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_p4ada"]
+gradient = SubResource("Gradient_fett5")
+
+[sub_resource type="Curve" id="Curve_yxnyx"]
+_limits = [0.0, 3.8490443, 0.0, 1.0]
+_data = [Vector2(0, 3.8490443), 0.0, -1.7124382, 0, 1, Vector2(1, 2.1366062), -1.7124382, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_iu127"]
+curve = SubResource("Curve_yxnyx")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_0vxo7"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(579, 301, 0)
+direction = Vector3(0.9702957, 0.2419219, 0)
+spread = 4.0
+initial_velocity_min = 36.0
+initial_velocity_max = 46.0
+gravity = Vector3(5, -5, 0)
+scale_min = 0.7547055
+scale_max = 1.2452946
+scale_curve = SubResource("CurveTexture_iu127")
+color_ramp = SubResource("GradientTexture1D_p4ada")
+
+[node name="Particle2D" type="GPUParticles2D" unique_id=750839044]
+material = SubResource("CanvasItemMaterial_qr1u4")
+amount = 60
+texture = ExtResource("1_qr1u4")
+lifetime = 20.0
+randomness = 0.016445
+visibility_rect = Rect2(-2306.695, -2306.695, 4613.39, 4613.39)
+process_material = SubResource("ParticleProcessMaterial_0vxo7")

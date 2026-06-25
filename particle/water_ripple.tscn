@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://d2hfa7akspl2e"]
+
+[ext_resource type="Texture2D" uid="uid://gu868jgmen6e" path="res://particle/water_ripple_0.png" id="1_6u815"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_6u815"]
+
+[sub_resource type="Gradient" id="Gradient_v41l2"]
+offsets = PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.4, 0.46666667, 0.53333336, 0.6, 0.6666667, 0.73333335, 0.8, 0.8666667, 0.93333334, 1)
+colors = PackedColorArray(1, 0.7727273, 0.9166666, 1, 1, 1.2272727, 1.0833334, 1, 1, 1.1138524, 0.927301, 1, 1, 0.95473576, 1.0628778, 1, 1, 0.8969687, 0.95545584, 1, 1, 0.9059071, 0.9743275, 1, 1, 1.1650883, 1.0546154, 1, 1, 0.9819459, 1.0114993, 1, 1, 1.0010945, 0.9990316, 1, 1, 1.1450127, 1.0512452, 1, 1, 1.1139579, 1.0375396, 1, 1, 0.97860277, 1.0271933, 1, 1, 1.1303385, 1.0068088, 1, 1, 0.97649485, 0.9692904, 1, 1, 0.8848785, 1.019772, 1, 1, 1.1072721, 1.0554428, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_7fj01"]
+gradient = SubResource("Gradient_v41l2")
+
+[sub_resource type="Gradient" id="Gradient_eiu5i"]
+colors = PackedColorArray(0, 0.44, 0.6, 0, 0, 0.34, 0.5, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_2ewiv"]
+gradient = SubResource("Gradient_eiu5i")
+
+[sub_resource type="Curve" id="Curve_4qoqv"]
+_limits = [0.0, 6.243554, 0.0, 1.0]
+_data = [Vector2(0, 6.243554), 0.0, -5.7077756, 0, 1, Vector2(1, 0.53577834), -5.7077756, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_3rkry"]
+curve = SubResource("Curve_4qoqv")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_nub88"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(240, 0, 0)
+spread = 0.0
+initial_velocity_max = 71.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.5223483
+scale_max = 1.4776517
+scale_curve = SubResource("CurveTexture_3rkry")
+color_ramp = SubResource("GradientTexture1D_2ewiv")
+color_initial_ramp = SubResource("GradientTexture1D_7fj01")
+
+[node name="Particle2D" type="GPUParticles2D" unique_id=1831586598]
+material = SubResource("CanvasItemMaterial_6u815")
+amount = 38
+texture = ExtResource("1_6u815")
+lifetime = 1.24
+visibility_rect = Rect2(-982.04, -982.04, 1964.08, 1964.08)
+process_material = SubResource("ParticleProcessMaterial_nub88")

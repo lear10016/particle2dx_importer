@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://ckpyxelwp7pb"]
+
+[ext_resource type="Texture2D" uid="uid://bv4emguqpf45v" path="res://particle/gold_0.png" id="1_tfdtr"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_tfdtr"]
+blend_mode = 4
+
+[sub_resource type="Gradient" id="Gradient_qia00"]
+colors = PackedColorArray(1, 1, 1, 1, 0.89, 0.89, 0.89, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_tcyvc"]
+gradient = SubResource("Gradient_qia00")
+
+[sub_resource type="Curve" id="Curve_7uqse"]
+_limits = [0.0, 1.3535742, 0.0, 1.0]
+_data = [Vector2(0, 1.002465), 0.0, 0.35110915, 0, 1, Vector2(1, 1.3535742), 0.35110915, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_rvg5l"]
+curve = SubResource("Curve_7uqse")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1gx16"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(268.1641, 74, 0)
+angle_min = 88.4457
+angle_max = 1542.8043
+direction = Vector3(6.123032e-17, -1, 0)
+spread = 30.64145
+initial_velocity_min = 579.7184
+initial_velocity_max = 1420.2816
+angular_velocity_min = -211.08553
+angular_velocity_max = -211.08553
+gravity = Vector3(0, 1925, 0)
+scale_min = 0.04998202
+scale_max = 1.9500179
+scale_curve = SubResource("CurveTexture_rvg5l")
+color_ramp = SubResource("GradientTexture1D_tcyvc")
+
+[node name="Particle2D" type="GPUParticles2D" unique_id=675818882]
+material = SubResource("CanvasItemMaterial_tfdtr")
+amount = 60
+texture = ExtResource("1_tfdtr")
+lifetime = 5.0
+one_shot = true
+explosiveness = 0.92
+randomness = 0.8
+fixed_fps = 60
+visibility_rect = Rect2(-13388.432, -13388.432, 26776.863, 26776.863)
+process_material = SubResource("ParticleProcessMaterial_1gx16")

@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://5kos3ydoo6l8"]
+
+[ext_resource type="Texture2D" uid="uid://b16jtshty5jue" path="res://particle/snow_0.png" id="1_0qb35"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_0qb35"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_dypu8"]
+offsets = PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.4, 0.46666667, 0.53333336, 0.6, 0.6666667, 0.73333335, 0.8, 0.8666667, 0.93333334, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.6868892, 1, 1, 1, 0.4977569, 1, 1, 1, 1, 1, 1, 1, 0.24352199, 1, 1, 1, 0.5876499, 1, 1, 1, 0.806691, 1, 1, 1, 0.9004769, 1, 1, 1, 0.93445593, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.78352475, 1, 1, 1, 0.7309041, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_4i5xt"]
+gradient = SubResource("Gradient_dypu8")
+
+[sub_resource type="Gradient" id="Gradient_jr24y"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_btr4n"]
+gradient = SubResource("Gradient_jr24y")
+
+[sub_resource type="Curve" id="Curve_po8vb"]
+_data = [Vector2(0, 0), 0.0, 0.45335153, 0, 1, Vector2(1, 0.45335156), 0.45335153, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_7ws3d"]
+curve = SubResource("Curve_po8vb")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_x4rou"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(800, 800, 0)
+angle_min = -1440.0
+angle_max = -1440.0
+direction = Vector3(-0.9135454, 0.40673664, 0)
+spread = 180.0
+initial_velocity_min = 50.0
+initial_velocity_max = 50.0
+gravity = Vector3(-51, 100, 0)
+scale_min = 0.001
+scale_max = 1.999
+scale_curve = SubResource("CurveTexture_7ws3d")
+color_ramp = SubResource("GradientTexture1D_btr4n")
+color_initial_ramp = SubResource("GradientTexture1D_4i5xt")
+
+[node name="Particle2D" type="GPUParticles2D" unique_id=504734064]
+material = SubResource("CanvasItemMaterial_0qb35")
+amount = 936
+texture = ExtResource("1_0qb35")
+lifetime = 2.34
+visibility_rect = Rect2(-1309.3708, -1309.3708, 2618.7417, 2618.7417)
+process_material = SubResource("ParticleProcessMaterial_x4rou")

@@ -1,10 +1,10 @@
-[gd_scene format=3 uid="uid://dtawdnirgfrjm"]
+[gd_scene format=3 uid="uid://ciuii6wawiu0s"]
 
-[ext_resource type="Texture2D" uid="uid://ccwnoco0u046q" path="res://particle/battle_0.png" id="1_doq05"]
+[ext_resource type="Texture2D" uid="uid://snhlhsdfgyi3" path="res://particle/battle_0.png" id="1_doq05"]
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_uhn5x"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_doq05"]
 
-[sub_resource type="Shader" id="Shader_gb1b2"]
+[sub_resource type="Shader" id="Shader_uhn5x"]
 code = "
 shader_type particles;
 render_mode disable_velocity, disable_force;
@@ -96,8 +96,8 @@ void process() {
 }
 "
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_iwwtc"]
-shader = SubResource("Shader_gb1b2")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gb1b2"]
+shader = SubResource("Shader_uhn5x")
 shader_parameter/texture_pixels = 34.0
 shader_parameter/base_lifetime = 2.2
 shader_parameter/lifetime_variance = 0.7
@@ -122,12 +122,12 @@ shader_parameter/start_rotation_variance_deg = 133.0
 shader_parameter/end_rotation_deg = 0.0
 shader_parameter/end_rotation_variance_deg = 0.0
 
-[node name="Particle2D" type="GPUParticles2D" unique_id=669557403]
-material = SubResource("CanvasItemMaterial_uhn5x")
+[node name="Particle2D" type="GPUParticles2D" unique_id=1272509249]
+material = SubResource("CanvasItemMaterial_doq05")
 amount = 264
 texture = ExtResource("1_doq05")
 lifetime = 2.9000000000000004
 preprocess = 2.9000000000000004
 fixed_fps = 60
 visibility_rect = Rect2(-231.02776, -231.02776, 462.0555, 462.0555)
-process_material = SubResource("ShaderMaterial_iwwtc")
+process_material = SubResource("ShaderMaterial_gb1b2")

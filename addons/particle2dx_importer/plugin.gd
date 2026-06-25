@@ -5,12 +5,15 @@ const Converter := preload("res://addons/particle2dx_importer/cocos_particle2dx_
 const SINGLE_CONVERT_MENU := "Convert Particle2D Plist..."
 const BATCH_CONVERT_MENU := "Convert Particle2D Plist Folder..."
 const DEFAULT_OUTPUT_ROOT := "res://converted_particles"
+const MESSAGE_DIALOG_SIZE := Vector2i(820, 560)
+const MAX_MESSAGE_ITEMS_PER_SECTION := 20
 
 var _open_dialog: FileDialog
 var _save_dialog: FileDialog
 var _batch_open_dialog: FileDialog
 var _batch_save_dialog: FileDialog
 var _message_dialog: AcceptDialog
+var _message_text: RichTextLabel
 var _source_path := ""
 var _batch_source_dir := ""
 
@@ -68,6 +71,17 @@ func _create_dialogs() -> void:
 
 	_message_dialog = AcceptDialog.new()
 	_message_dialog.title = "Cocos Particle2D Converter"
+	_message_dialog.dialog_text = ""
+	_message_dialog.min_size = MESSAGE_DIALOG_SIZE
+	_message_text = RichTextLabel.new()
+	_message_text.bbcode_enabled = false
+	_message_text.fit_content = false
+	_message_text.scroll_active = true
+	_message_text.selection_enabled = true
+	_message_text.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_message_text.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	_message_text.custom_minimum_size = Vector2(MESSAGE_DIALOG_SIZE.x - 40, MESSAGE_DIALOG_SIZE.y - 120)
+	_message_dialog.add_child(_message_text)
 	base_control.add_child(_message_dialog)
 
 func _show_open_dialog() -> void:
@@ -177,11 +191,11 @@ func _convert_plist_folder(source_dir: String, output_dir: String) -> void:
 
 	var summary := "Converted %d of %d plist files to:\n%s" % [converted_count, plist_paths.size(), output_dir]
 	if converted_count > 0:
-		summary += "\n\nScenes:\n- %s" % "\n- ".join(converted_paths)
+		summary += _format_message_section("Scenes", converted_paths)
 	if warning_count > 0:
-		summary += "\n\nWarnings (%d):\n- %s" % [warning_count, "\n- ".join(warning_lines)]
+		summary += _format_message_section("Warnings (%d)" % warning_count, warning_lines)
 	if not error_lines.is_empty():
-		summary += "\n\nFailed (%d):\n- %s" % [error_lines.size(), "\n- ".join(error_lines)]
+		summary += _format_message_section("Failed (%d)" % error_lines.size(), error_lines)
 	_show_message(summary)
 
 func _list_plist_files(source_dir: String) -> PackedStringArray:
@@ -210,9 +224,26 @@ func _default_batch_output_dir(source_dir: String) -> String:
 		folder_name = "batch"
 	return "%s/%s" % [DEFAULT_OUTPUT_ROOT, folder_name]
 
+func _format_message_section(title: String, items: PackedStringArray) -> String:
+	if items.is_empty():
+		return ""
+
+	var visible_items := PackedStringArray()
+	var visible_count := mini(items.size(), MAX_MESSAGE_ITEMS_PER_SECTION)
+	for index in range(visible_count):
+		visible_items.append(items[index])
+
+	var section := "\n\n%s:\n- %s" % [title, "\n- ".join(visible_items)]
+	var remaining_count := items.size() - visible_count
+	if remaining_count > 0:
+		section += "\n- ... and %d more" % remaining_count
+	return section
+
 func _show_message(text: String) -> void:
-	_message_dialog.dialog_text = text
-	_message_dialog.popup_centered()
+	_message_text.clear()
+	_message_text.text = text
+	_message_text.scroll_to_line(0)
+	_message_dialog.popup_centered_clamped(MESSAGE_DIALOG_SIZE, 0.8)
 
 func _wait_for_texture_import(path: String) -> void:
 	if not path.begins_with("res://"):

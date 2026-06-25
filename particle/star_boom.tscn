@@ -1,25 +1,25 @@
-[gd_scene format=3 uid="uid://tvgpioxsgd0a"]
+[gd_scene format=3 uid="uid://e2481dyg0e22"]
 
-[ext_resource type="Texture2D" path="res://particle/star_boom_0.png" id="1_nsnv7"]
+[ext_resource type="Texture2D" uid="uid://dwpfs8duudqie" path="res://particle/star_boom_0.png" id="1_nsnv7"]
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_33d0o"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_nsnv7"]
 blend_mode = 4
 
-[sub_resource type="Gradient" id="Gradient_ny6vu"]
+[sub_resource type="Gradient" id="Gradient_33d0o"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_0q0se"]
-gradient = SubResource("Gradient_ny6vu")
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ny6vu"]
+gradient = SubResource("Gradient_33d0o")
 
-[sub_resource type="Curve" id="Curve_71h6n"]
+[sub_resource type="Curve" id="Curve_0q0se"]
 _limits = [0.0, 1.623702, 0.0, 1.0]
 _data = [Vector2(0, 1.623702), 0.0, -1.623702, 0, 1, Vector2(1, 0), -1.623702, 0.0, 1, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_nyrnu"]
-curve = SubResource("Curve_71h6n")
+[sub_resource type="CurveTexture" id="CurveTexture_71h6n"]
+curve = SubResource("Curve_0q0se")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_w1kmj"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_nyrnu"]
 particle_flag_disable_z = true
 angle_min = 168.0
 angle_max = 168.0
@@ -31,11 +31,11 @@ angular_velocity_max = -16800.0
 gravity = Vector3(0, 651, 0)
 scale_min = 0.001
 scale_max = 1.999
-scale_curve = SubResource("CurveTexture_nyrnu")
-color_ramp = SubResource("GradientTexture1D_0q0se")
+scale_curve = SubResource("CurveTexture_71h6n")
+color_ramp = SubResource("GradientTexture1D_ny6vu")
 
-[node name="Particle2D" type="GPUParticles2D" unique_id=172630746]
-material = SubResource("CanvasItemMaterial_33d0o")
+[node name="Particle2D" type="GPUParticles2D" unique_id=42059567]
+material = SubResource("CanvasItemMaterial_nsnv7")
 amount = 81
 texture = ExtResource("1_nsnv7")
 lifetime = 0.01
@@ -43,4 +43,4 @@ one_shot = true
 randomness = 1.0
 fixed_fps = 60
 visibility_rect = Rect2(-943.7825, -943.7825, 1887.565, 1887.565)
-process_material = SubResource("ParticleProcessMaterial_w1kmj")
+process_material = SubResource("ParticleProcessMaterial_nyrnu")

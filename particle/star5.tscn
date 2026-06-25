@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://dh8hjee4n6wvo"]
+
+[ext_resource type="Texture2D" uid="uid://ctrby2ba2axj6" path="res://particle/star5_0.png" id="1_tridr"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_tridr"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_dcwx6"]
+offsets = PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.4, 0.46666667, 0.53333336, 0.6, 0.6666667, 0.73333335, 0.8, 0.8666667, 0.93333334, 1)
+colors = PackedColorArray(1, 1, 0.8, 0.9, 1, 1, 1, 1, 1, 1, 0.8255225, 1, 1, 1, 1, 0.9686889, 1, 1, 0.893094, 0.9497757, 1, 1, 0.93838584, 1, 1, 1, 1, 0.92435217, 1, 1, 1, 0.958765, 1, 1, 0.9976759, 0.9806691, 1, 1, 1, 0.9900477, 1, 1, 1, 0.9934456, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.9262969, 0.9783525, 1, 1, 1, 0.9730904, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_hc61n"]
+gradient = SubResource("Gradient_dcwx6")
+
+[sub_resource type="Gradient" id="Gradient_fu771"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ol3i6"]
+gradient = SubResource("Gradient_fu771")
+
+[sub_resource type="Curve" id="Curve_6r1tf"]
+_limits = [0.0, 1.4672776, 0.0, 1.0]
+_data = [Vector2(0, 1.4672776), 0.0, -0.55462164, 0, 1, Vector2(1, 0.912656), -0.55462164, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_31jp7"]
+curve = SubResource("Curve_6r1tf")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_o178b"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(50, 30, 0)
+angle_min = 200.0
+angle_max = 400.0
+direction = Vector3(6.123032e-17, -1, 0)
+spread = 120.0
+initial_velocity_min = 350.0
+initial_velocity_max = 550.0
+angular_velocity_min = -300.0
+angular_velocity_max = -300.0
+gravity = Vector3(0, 250, 0)
+scale_min = 0.47875234
+scale_max = 1.5212476
+scale_curve = SubResource("CurveTexture_31jp7")
+color_ramp = SubResource("GradientTexture1D_ol3i6")
+color_initial_ramp = SubResource("GradientTexture1D_hc61n")
+
+[node name="Particle2D" type="GPUParticles2D" unique_id=2024687819]
+material = SubResource("CanvasItemMaterial_tridr")
+amount = 35
+texture = ExtResource("1_tridr")
+one_shot = true
+randomness = 1.0
+fixed_fps = 60
+visibility_rect = Rect2(-1562.3096, -1562.3096, 3124.6191, 3124.6191)
+process_material = SubResource("ParticleProcessMaterial_o178b")

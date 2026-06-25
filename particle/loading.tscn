@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://cn73a1hvumnld"]
+
+[ext_resource type="Texture2D" uid="uid://caa5tmwutslip" path="res://particle/loading_0.png" id="1_ft2bi"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ft2bi"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_4gffd"]
+offsets = PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.4, 0.46666667, 0.53333336, 0.6, 0.6666667, 0.73333335, 0.8, 0.8666667, 0.93333334, 1)
+colors = PackedColorArray(1, 1, 0.8, 0.9, 1, 1, 1, 1, 1, 1, 0.8255225, 1, 1, 1, 1, 0.9686889, 1, 1, 0.893094, 0.9497757, 1, 1, 0.93838584, 1, 1, 1, 1, 0.92435217, 1, 1, 1, 0.958765, 1, 1, 0.9976759, 0.9806691, 1, 1, 1, 0.9900477, 1, 1, 1, 0.9934456, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.9262969, 0.9783525, 1, 1, 1, 0.9730904, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_24mya"]
+gradient = SubResource("Gradient_4gffd")
+
+[sub_resource type="Gradient" id="Gradient_651fk"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ffl7t"]
+gradient = SubResource("Gradient_651fk")
+
+[sub_resource type="Curve" id="Curve_7e5bx"]
+_data = [Vector2(0, 0.5290193), 0.0, -0.13788712, 0, 1, Vector2(1, 0.39113218), -0.13788712, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_4esqp"]
+curve = SubResource("Curve_7e5bx")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_r5rv3"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(0, 20, 0)
+direction = Vector3(-1, -1.2246064e-16, 0)
+spread = 0.0
+initial_velocity_max = 15.0
+gravity = Vector3(-170, 0, 0)
+scale_min = 0.904
+scale_max = 1.096
+scale_curve = SubResource("CurveTexture_4esqp")
+color_ramp = SubResource("GradientTexture1D_ffl7t")
+color_initial_ramp = SubResource("GradientTexture1D_24mya")
+
+[node name="Particle2D" type="GPUParticles2D" unique_id=1506280250]
+material = SubResource("CanvasItemMaterial_ft2bi")
+amount = 36
+texture = ExtResource("1_ft2bi")
+lifetime = 0.6
+randomness = 0.5
+visibility_rect = Rect2(-128, -128, 256, 256)
+process_material = SubResource("ParticleProcessMaterial_r5rv3")

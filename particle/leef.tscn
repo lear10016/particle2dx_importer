@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://bxic2gagsx75q"]
+
+[ext_resource type="Texture2D" uid="uid://bjhes6uei7spu" path="res://particle/leef_0.png" id="1_5xis2"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_5xis2"]
+
+[sub_resource type="Gradient" id="Gradient_yfer7"]
+colors = PackedColorArray(0.2, 1, 0.2, 1, 1, 0.5, 0.4, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_qp258"]
+gradient = SubResource("Gradient_yfer7")
+
+[sub_resource type="Curve" id="Curve_cobyb"]
+_data = [Vector2(0, 0.08129347), 0.0, -0.007825039, 0, 1, Vector2(1, 0.07346843), -0.007825039, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_kfsmr"]
+curve = SubResource("Curve_cobyb")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8msxm"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(245, 93, 0)
+angle_min = 720.0
+angle_max = 720.0
+direction = Vector3(0.64278764, 0.76604444, 0)
+spread = 60.0
+initial_velocity_min = 36.0
+initial_velocity_max = 112.0
+angular_velocity_min = -203.38983
+angular_velocity_max = -203.38983
+gravity = Vector3(80, 53, 0)
+tangential_accel_min = -67.0
+tangential_accel_max = 67.0
+scale_min = 0.7692308
+scale_max = 1.2307693
+scale_curve = SubResource("CurveTexture_kfsmr")
+color_ramp = SubResource("GradientTexture1D_qp258")
+
+[node name="Particle2D" type="GPUParticles2D" unique_id=1996091522]
+material = SubResource("CanvasItemMaterial_5xis2")
+amount = 15
+texture = ExtResource("1_5xis2")
+lifetime = 3.54
+randomness = 0.11299435
+visibility_rect = Rect2(-890.3373, -890.3373, 1780.6746, 1780.6746)
+process_material = SubResource("ParticleProcessMaterial_8msxm")

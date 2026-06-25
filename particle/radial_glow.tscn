@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://b787m1hukl2l5"]
+
+[ext_resource type="Texture2D" uid="uid://b0twt7vdrh28o" path="res://particle/radial_glow_0.png" id="1_41gqw"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_41gqw"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_wl58c"]
+offsets = PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.4, 0.46666667, 0.53333336, 0.6, 0.6666667, 0.73333335, 0.8, 0.8666667, 0.93333334, 1)
+colors = PackedColorArray(1, 1, 0.5, 0.9, 1, 1, 1.5, 1, 1, 1, 0.56380624, 1, 1, 1, 1.3772662, 0.9686889, 1, 1, 0.7327349, 0.9497757, 1, 1, 0.84596467, 1, 1, 1, 1.3276925, 0.92435217, 1, 1, 1.0689957, 0.958765, 1, 1, 0.9941898, 0.9806691, 1, 1, 1.3074709, 0.9900477, 1, 1, 1.2252374, 0.9934456, 1, 1, 1.1631597, 1, 1, 1, 1.0408527, 1, 1, 1, 0.81574214, 0.9783525, 1, 1, 1.1186322, 0.9730904, 1, 1, 1.3326572, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_3b3e2"]
+gradient = SubResource("Gradient_wl58c")
+
+[sub_resource type="Gradient" id="Gradient_5ay34"]
+colors = PackedColorArray(1, 0.6, 0.4, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_2t1a4"]
+gradient = SubResource("Gradient_5ay34")
+
+[sub_resource type="Curve" id="Curve_s87u7"]
+_limits = [0.0, 1.5694118, 0.0, 1.0]
+_data = [Vector2(0, 1.5694118), 0.0, -0.98088235, 0, 1, Vector2(1, 0.5885294), -0.98088235, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_rsv7m"]
+curve = SubResource("Curve_s87u7")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_0shgi"]
+particle_flag_disable_z = true
+angle_min = -55.0
+angle_max = 79.0
+direction = Vector3(-1, 1.2246064e-16, 0)
+spread = 180.0
+angular_velocity_min = -4.0
+angular_velocity_max = -4.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.001
+scale_max = 1.999
+scale_curve = SubResource("CurveTexture_rsv7m")
+color_ramp = SubResource("GradientTexture1D_2t1a4")
+color_initial_ramp = SubResource("GradientTexture1D_3b3e2")
+
+[node name="Particle2D" type="GPUParticles2D" unique_id=1862527572]
+material = SubResource("CanvasItemMaterial_41gqw")
+amount = 10
+texture = ExtResource("1_41gqw")
+lifetime = 3.0
+randomness = 1.0
+visibility_rect = Rect2(-1055, -1055, 2110, 2110)
+process_material = SubResource("ParticleProcessMaterial_0shgi")

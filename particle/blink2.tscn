@@ -1,11 +1,11 @@
-[gd_scene format=3 uid="uid://cfm1cvk6eb7sj"]
+[gd_scene format=3 uid="uid://tnor2bj1fdir"]
 
-[ext_resource type="Texture2D" uid="uid://t3toda557tcu" path="res://particle/blink2_0.png" id="1_ik777"]
+[ext_resource type="Texture2D" uid="uid://qxjln8pduglg" path="res://particle/blink2_0.png" id="1_ik777"]
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_nlant"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ik777"]
 blend_mode = 1
 
-[sub_resource type="Shader" id="Shader_sgo4t"]
+[sub_resource type="Shader" id="Shader_nlant"]
 code = "
 shader_type particles;
 render_mode disable_velocity, disable_force;
@@ -97,8 +97,8 @@ void process() {
 }
 "
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_4pp2f"]
-shader = SubResource("Shader_sgo4t")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sgo4t"]
+shader = SubResource("Shader_nlant")
 shader_parameter/texture_pixels = 215.0
 shader_parameter/base_lifetime = 1.0
 shader_parameter/lifetime_variance = 1.0
@@ -123,12 +123,12 @@ shader_parameter/start_rotation_variance_deg = 0.0
 shader_parameter/end_rotation_deg = 1440.0
 shader_parameter/end_rotation_variance_deg = 0.0
 
-[node name="Particle2D" type="GPUParticles2D" unique_id=1565310388]
-material = SubResource("CanvasItemMaterial_nlant")
+[node name="Particle2D" type="GPUParticles2D" unique_id=1874530109]
+material = SubResource("CanvasItemMaterial_ik777")
 amount = 14
 texture = ExtResource("1_ik777")
 lifetime = 2.0
 preprocess = 2.0
 fixed_fps = 60
 visibility_rect = Rect2(-1033.0277, -1033.0277, 2066.0554, 2066.0554)
-process_material = SubResource("ShaderMaterial_4pp2f")
+process_material = SubResource("ShaderMaterial_sgo4t")

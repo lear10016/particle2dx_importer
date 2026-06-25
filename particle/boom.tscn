@@ -1,11 +1,11 @@
-[gd_scene format=3 uid="uid://mma8x2lucrdk"]
+[gd_scene format=3 uid="uid://dop5sgjgfra70"]
 
-[ext_resource type="Texture2D" uid="uid://425e4ye1ky34" path="res://particle/boom_0.png" id="1_8wimx"]
+[ext_resource type="Texture2D" uid="uid://c228kg0cqh6kb" path="res://particle/boom_0.png" id="1_8wimx"]
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_5vlc5"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_8wimx"]
 blend_mode = 1
 
-[sub_resource type="Shader" id="Shader_vm7dd"]
+[sub_resource type="Shader" id="Shader_5vlc5"]
 code = "
 shader_type particles;
 render_mode disable_velocity, disable_force;
@@ -97,8 +97,8 @@ void process() {
 }
 "
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_wf6pf"]
-shader = SubResource("Shader_vm7dd")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vm7dd"]
+shader = SubResource("Shader_5vlc5")
 shader_parameter/texture_pixels = 200.0
 shader_parameter/base_lifetime = 1.54
 shader_parameter/lifetime_variance = 1.4
@@ -123,8 +123,8 @@ shader_parameter/start_rotation_variance_deg = 0.0
 shader_parameter/end_rotation_deg = 0.0
 shader_parameter/end_rotation_variance_deg = 0.0
 
-[node name="Particle2D" type="GPUParticles2D" unique_id=200577747]
-material = SubResource("CanvasItemMaterial_5vlc5")
+[node name="Particle2D" type="GPUParticles2D" unique_id=594413660]
+material = SubResource("CanvasItemMaterial_8wimx")
 amount = 40
 texture = ExtResource("1_8wimx")
 lifetime = 2.94
@@ -132,4 +132,4 @@ one_shot = true
 explosiveness = 0.9829932
 fixed_fps = 60
 visibility_rect = Rect2(-620, -620, 1240, 1240)
-process_material = SubResource("ShaderMaterial_wf6pf")
+process_material = SubResource("ShaderMaterial_vm7dd")

@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://bed4bc4lt8pnw"]
+
+[ext_resource type="Texture2D" uid="uid://ba3yiwjvxvf1y" path="res://particle/light_0.png" id="1_eqhbw"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_eqhbw"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_1gyxd"]
+offsets = PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.4, 0.46666667, 0.53333336, 0.6, 0.6666667, 0.73333335, 0.8, 0.8666667, 0.93333334, 1)
+colors = PackedColorArray(0.6, 0.31, 1, 0, 1, 1, 1, 1, 0.6619185, 1, 1, 1, 1, 0.8625778, 1, 0.6868892, 1, 0.687197, 1, 0.4977569, 0.8594412, 0.71433395, 1, 1, 1, 1, 1, 0.24352199, 0.7866271, 0.9451876, 1, 0.5876499, 1, 1, 1, 0.806691, 0.9572742, 1, 1, 0.9004769, 1, 1, 1, 0.93445593, 0.8566012, 0.935038, 1, 1, 1, 1, 1, 1, 0.73614234, 0.9286383, 1, 0.78352475, 0.9897807, 0.65049106, 1, 0.7309041, 0.8187961, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_rdwir"]
+gradient = SubResource("Gradient_1gyxd")
+
+[sub_resource type="Gradient" id="Gradient_c5jt1"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_d3st0"]
+gradient = SubResource("Gradient_c5jt1")
+
+[sub_resource type="Curve" id="Curve_5smbw"]
+_limits = [0.0, 2.0217826, 0.0, 1.0]
+_data = [Vector2(0, 0.4128693), 0.0, 1.6089133, 0, 1, Vector2(1, 2.0217826), 1.6089133, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_ooutu"]
+curve = SubResource("Curve_5smbw")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_poyp5"]
+particle_flag_disable_z = true
+angle_min = -50.0
+angle_max = 50.0
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.14705883
+scale_max = 1.8529412
+scale_curve = SubResource("CurveTexture_ooutu")
+color_ramp = SubResource("GradientTexture1D_d3st0")
+color_initial_ramp = SubResource("GradientTexture1D_rdwir")
+
+[node name="Particle2D" type="GPUParticles2D" unique_id=991264405]
+material = SubResource("CanvasItemMaterial_eqhbw")
+amount = 39
+texture = ExtResource("1_eqhbw")
+lifetime = 1.3
+randomness = 0.07692308
+visibility_rect = Rect2(-1900, -1900, 3800, 3800)
+process_material = SubResource("ParticleProcessMaterial_poyp5")

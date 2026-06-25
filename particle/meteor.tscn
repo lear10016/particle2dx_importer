@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://o6ncb76xp2al"]
+
+[ext_resource type="Texture2D" uid="uid://dg8ev5w3e3f1e" path="res://particle/meteor_0.png" id="1_o4jd1"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_o4jd1"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_rlmnj"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_c0sqb"]
+gradient = SubResource("Gradient_rlmnj")
+
+[sub_resource type="Curve" id="Curve_oaanh"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 1, Vector2(1, 1), 0.0, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_w0hnq"]
+curve = SubResource("Curve_oaanh")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_r0dj7"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(320, 385, 0)
+direction = Vector3(-0.6293204, 0.777146, 0)
+spread = 4.0
+initial_velocity_min = 1054.0
+initial_velocity_max = 1132.0
+gravity = Vector3(0, 40, 0)
+scale_curve = SubResource("CurveTexture_w0hnq")
+color_ramp = SubResource("GradientTexture1D_c0sqb")
+
+[node name="Particle2D" type="GPUParticles2D" unique_id=1745659292]
+material = SubResource("CanvasItemMaterial_o4jd1")
+amount = 30
+texture = ExtResource("1_o4jd1")
+lifetime = 2.0
+visibility_rect = Rect2(-3066.6245, -3066.6245, 6133.249, 6133.249)
+process_material = SubResource("ParticleProcessMaterial_r0dj7")

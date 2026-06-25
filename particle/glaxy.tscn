@@ -1,0 +1,134 @@
+[gd_scene format=3 uid="uid://fpprasovh638"]
+
+[ext_resource type="Texture2D" uid="uid://wqwgd8i3q0d1" path="res://particle/glaxy_0.png" id="1_8pxtj"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_8pxtj"]
+blend_mode = 1
+
+[sub_resource type="Shader" id="Shader_wxhvx"]
+code = "
+shader_type particles;
+render_mode disable_velocity, disable_force;
+
+uniform float texture_pixels = 64.0;
+uniform float base_lifetime = 1.0;
+uniform float lifetime_variance = 0.0;
+uniform float angle_deg = 0.0;
+uniform float angle_variance_deg = 0.0;
+uniform float max_radius : hint_range(0.0, 4096.0, 1.0) = 0.0;
+uniform float max_radius_variance : hint_range(0.0, 4096.0, 1.0) = 0.0;
+uniform float min_radius : hint_range(0.0, 4096.0, 1.0) = 0.0;
+uniform float rotate_per_second_deg = 0.0;
+uniform float rotate_per_second_variance_deg = 0.0;
+uniform float start_size = 1.0;
+uniform float start_size_variance = 0.0;
+uniform float end_size = 1.0;
+uniform float end_size_variance = 0.0;
+uniform vec2 source_position_variance = vec2(0.0);
+uniform vec4 start_color = vec4(1.0);
+uniform vec4 start_color_variance = vec4(0.0);
+uniform vec4 end_color = vec4(1.0);
+uniform vec4 end_color_variance = vec4(0.0);
+uniform float start_rotation_deg = 0.0;
+uniform float start_rotation_variance_deg = 0.0;
+uniform float end_rotation_deg = 0.0;
+uniform float end_rotation_variance_deg = 0.0;
+
+float rand_from_seed(inout uint seed) {
+	seed = seed * 1664525u + 1013904223u;
+	return float(seed & 0x00ffffffu) / 16777215.0;
+}
+
+float centered_rand(inout uint seed) {
+	return rand_from_seed(seed) * 2.0 - 1.0;
+}
+
+vec4 randomize_color(vec4 color, vec4 variance, inout uint seed) {
+	return clamp(color + vec4(
+		centered_rand(seed) * variance.r,
+		centered_rand(seed) * variance.g,
+		centered_rand(seed) * variance.b,
+		centered_rand(seed) * variance.a
+	), vec4(0.0), vec4(1.0));
+}
+
+void process() {
+	if (RESTART) {
+		CUSTOM.x = 0.0;
+	} else {
+		CUSTOM.x += DELTA;
+	}
+
+	uint seed = RANDOM_SEED ^ (INDEX * 747796405u) ^ (NUMBER * 2891336453u);
+	uint lifetime_seed = seed ^ 1177153787u;
+	float particle_lifetime = max(0.01, base_lifetime + centered_rand(lifetime_seed) * lifetime_variance);
+	float t = clamp(CUSTOM.x / particle_lifetime, 0.0, 1.0);
+
+	float emit_angle = radians(angle_deg + centered_rand(seed) * angle_variance_deg);
+	float radius0 = max(0.0, max_radius + centered_rand(seed) * max_radius_variance);
+	float angular_speed = radians(rotate_per_second_deg + centered_rand(seed) * rotate_per_second_variance_deg);
+	float particle_start_size = max(0.0, start_size + centered_rand(seed) * start_size_variance);
+	float particle_end_size = max(0.0, end_size + centered_rand(seed) * end_size_variance);
+	float particle_start_rotation = radians(start_rotation_deg + centered_rand(seed) * start_rotation_variance_deg);
+	float particle_end_rotation = radians(end_rotation_deg + centered_rand(seed) * end_rotation_variance_deg);
+	vec4 particle_start_color = randomize_color(start_color, start_color_variance, seed);
+	vec4 particle_end_color = randomize_color(end_color, end_color_variance, seed);
+	vec2 source_offset = vec2(
+		centered_rand(seed) * source_position_variance.x,
+		-centered_rand(seed) * source_position_variance.y
+	);
+
+	float radius = mix(radius0, min_radius, t);
+	float angle = emit_angle + angular_speed * CUSTOM.x;
+	float size_scale = mix(particle_start_size, particle_end_size, t) / max(texture_pixels, 1.0);
+	if (CUSTOM.x > particle_lifetime) {
+		size_scale = 0.0;
+	}
+	float sprite_rotation = mix(particle_start_rotation, particle_end_rotation, t);
+	float c = cos(sprite_rotation);
+	float s = sin(sprite_rotation);
+
+	TRANSFORM[0] = vec4(c * size_scale, s * size_scale, 0.0, 0.0);
+	TRANSFORM[1] = vec4(-s * size_scale, c * size_scale, 0.0, 0.0);
+	TRANSFORM[2] = vec4(0.0, 0.0, 1.0, 0.0);
+	TRANSFORM[3] = vec4(source_offset.x - cos(angle) * radius, source_offset.y + sin(angle) * radius, 0.0, 1.0);
+	VELOCITY = vec3(0.0);
+	COLOR = mix(particle_start_color, particle_end_color, t);
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_i4hvl"]
+shader = SubResource("Shader_wxhvx")
+shader_parameter/texture_pixels = 66.0
+shader_parameter/base_lifetime = 0.8
+shader_parameter/lifetime_variance = 1.0
+shader_parameter/angle_deg = 0.0
+shader_parameter/angle_variance_deg = 180.0
+shader_parameter/max_radius = 233.0
+shader_parameter/max_radius_variance = 199.0
+shader_parameter/min_radius = 0.0
+shader_parameter/rotate_per_second_deg = -60.0
+shader_parameter/rotate_per_second_variance_deg = 0.0
+shader_parameter/start_size = 0.0
+shader_parameter/start_size_variance = 27.0
+shader_parameter/end_size = 15.0
+shader_parameter/end_size_variance = 27.0
+shader_parameter/source_position_variance = Vector2(305, 460)
+shader_parameter/start_color = Vector4(0.05, 0.3, 1, 1)
+shader_parameter/start_color_variance = Vector4(0, 0, 0, 0)
+shader_parameter/end_color = Vector4(1, 1, 0.4, 1)
+shader_parameter/end_color_variance = Vector4(0, 0, 0, 0)
+shader_parameter/start_rotation_deg = 0.0
+shader_parameter/start_rotation_variance_deg = 0.0
+shader_parameter/end_rotation_deg = 0.0
+shader_parameter/end_rotation_variance_deg = 0.0
+
+[node name="Particle2D" type="GPUParticles2D" unique_id=316046183]
+material = SubResource("CanvasItemMaterial_8pxtj")
+amount = 720
+texture = ExtResource("1_8pxtj")
+lifetime = 1.8
+preprocess = 1.8
+fixed_fps = 60
+visibility_rect = Rect2(-1091.9285, -1091.9285, 2183.857, 2183.857)
+process_material = SubResource("ShaderMaterial_i4hvl")

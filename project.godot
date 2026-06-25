@@ -11,9 +11,24 @@ config_version=5
 [application]
 
 config/name="Particle2DX Importer Demo"
+run/main_scene="uid://dskmjt1in330f"
 config/features=PackedStringArray("4.7")
 config/icon="res://icon.svg"
+
+[display]
+
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
 
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/particle2dx_importer/plugin.cfg")
+
+[physics]
+
+3d/physics_engine="Jolt Physics"
+
+[rendering]
+
+rendering_device/driver.windows="d3d12"
+renderer/rendering_method="mobile"

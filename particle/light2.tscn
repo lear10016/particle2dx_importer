@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://tkcgpe0wlpns"]
+
+[ext_resource type="Texture2D" uid="uid://bmm47ohrlxhb0" path="res://particle/light2_0.png" id="1_kvntf"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_kvntf"]
+
+[sub_resource type="Gradient" id="Gradient_wv4i1"]
+offsets = PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.4, 0.46666667, 0.53333336, 0.6, 0.6666667, 0.73333335, 0.8, 0.8666667, 0.93333334, 1)
+colors = PackedColorArray(1, 1, 0.8, 1, 1, 1, 1, 1, 1, 1, 0.8255225, 1, 1, 1, 1, 1, 1, 1, 0.893094, 1, 1, 1, 0.93838584, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.9976759, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.9262969, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_c4vrr"]
+gradient = SubResource("Gradient_wv4i1")
+
+[sub_resource type="Gradient" id="Gradient_67gch"]
+colors = PackedColorArray(1, 1, 1, 0, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_hxcns"]
+gradient = SubResource("Gradient_67gch")
+
+[sub_resource type="Curve" id="Curve_a22cu"]
+_limits = [0.0, 5.4690223, 0.0, 1.0]
+_data = [Vector2(0, 5.4690223), 0.0, -0.78184026, 0, 1, Vector2(1, 4.687182), -0.78184026, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_3ub6c"]
+curve = SubResource("Curve_a22cu")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_636kd"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(225, 40, 0)
+angle_min = 35.0
+angle_max = 35.0
+direction = Vector3(-0.32556817, 0.94551855, 0)
+spread = 4.0
+initial_velocity_max = 40.0
+gravity = Vector3(0, -20, 0)
+scale_min = 0.9917647
+scale_max = 1.0082353
+scale_curve = SubResource("CurveTexture_3ub6c")
+color_ramp = SubResource("GradientTexture1D_hxcns")
+color_initial_ramp = SubResource("GradientTexture1D_c4vrr")
+
+[node name="Particle2D" type="GPUParticles2D" unique_id=971700768]
+material = SubResource("CanvasItemMaterial_kvntf")
+amount = 15
+texture = ExtResource("1_kvntf")
+lifetime = 2.0
+randomness = 1.0
+visibility_rect = Rect2(-1266.5278, -1266.5278, 2533.0557, 2533.0557)
+process_material = SubResource("ParticleProcessMaterial_636kd")
