@@ -1,3 +1,194 @@
-[gd_scene format=3 uid="uid://dskmjt1in330f"]
+[gd_scene load_steps=2 format=3 uid="uid://dskmjt1in330f"]
 
-[node name="Main" type="Node3D" unique_id=570139066]
+[ext_resource type="Script" path="res://main.gd" id="1_8w4yq"]
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8w4yq")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.929412, 0.945098, 0.964706, 1)
+
+[node name="Shell" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 18.0
+offset_right = -20.0
+offset_bottom = -18.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Root" type="VBoxContainer" parent="Shell"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Header" type="VBoxContainer" parent="Shell/Root"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Title" type="Label" parent="Shell/Root/Header"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "AI Particle Practice"
+
+[node name="SummaryLabel" type="Label" parent="Shell/Root/Header"]
+unique_name_in_owner = true
+layout_mode = 2
+modulate = Color(0.262745, 0.341176, 0.415686, 1)
+autowrap_mode = 3
+text = "Loading particle previews..."
+
+[node name="Body" type="HBoxContainer" parent="Shell/Root"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 16
+
+[node name="StagePanel" type="PanelContainer" parent="Shell/Root/Body"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="StagePadding" type="MarginContainer" parent="Shell/Root/Body/StagePanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="StageLayout" type="VBoxContainer" parent="Shell/Root/Body/StagePanel/StagePadding"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+
+[node name="SelectedNameLabel" type="Label" parent="Shell/Root/Body/StagePanel/StagePadding/StageLayout"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "No Effect Selected"
+
+[node name="SelectedPathLabel" type="Label" parent="Shell/Root/Body/StagePanel/StagePadding/StageLayout"]
+unique_name_in_owner = true
+layout_mode = 2
+modulate = Color(0.356863, 0.431373, 0.494118, 1)
+autowrap_mode = 3
+text = ""
+
+[node name="StageFrame" type="PanelContainer" parent="Shell/Root/Body/StagePanel/StagePadding/StageLayout"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 620)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="StageViewportContainer" type="SubViewportContainer" parent="Shell/Root/Body/StagePanel/StagePadding/StageLayout/StageFrame"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+stretch = false
+
+[node name="StageViewport" type="SubViewport" parent="Shell/Root/Body/StagePanel/StagePadding/StageLayout/StageFrame/StageViewportContainer"]
+unique_name_in_owner = true
+disable_3d = true
+transparent_bg = false
+render_target_update_mode = 4
+size = Vector2i(960, 620)
+
+[node name="StageRoot" type="Node2D" parent="Shell/Root/Body/StagePanel/StagePadding/StageLayout/StageFrame/StageViewportContainer/StageViewport"]
+unique_name_in_owner = true
+
+[node name="LibraryPanel" type="PanelContainer" parent="Shell/Root/Body"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="LibraryPadding" type="MarginContainer" parent="Shell/Root/Body/LibraryPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 14
+
+[node name="LibraryLayout" type="VBoxContainer" parent="Shell/Root/Body/LibraryPanel/LibraryPadding"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="LibraryHeader" type="VBoxContainer" parent="Shell/Root/Body/LibraryPanel/LibraryPadding/LibraryLayout"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="LibraryTitle" type="Label" parent="Shell/Root/Body/LibraryPanel/LibraryPadding/LibraryLayout/LibraryHeader"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Effect Browser"
+
+[node name="BrowseSummaryLabel" type="Label" parent="Shell/Root/Body/LibraryPanel/LibraryPadding/LibraryLayout/LibraryHeader"]
+unique_name_in_owner = true
+layout_mode = 2
+modulate = Color(0.356863, 0.431373, 0.494118, 1)
+text = "0 effects"
+
+[node name="SourceTabs" type="TabBar" parent="Shell/Root/Body/LibraryPanel/LibraryPadding/LibraryLayout"]
+unique_name_in_owner = true
+layout_mode = 2
+clip_tabs = false
+
+[node name="CardScroll" type="ScrollContainer" parent="Shell/Root/Body/LibraryPanel/LibraryPadding/LibraryLayout"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="CardGrid" type="GridContainer" parent="Shell/Root/Body/LibraryPanel/LibraryPadding/LibraryLayout/CardScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+columns = 2
+
+[node name="EmptyLabel" type="Label" parent="Shell/Root/Body/LibraryPanel/LibraryPadding/LibraryLayout"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+horizontal_alignment = 1
+text = "No particle previews available."
+
+[node name="Footer" type="HBoxContainer" parent="Shell/Root/Body/LibraryPanel/LibraryPadding/LibraryLayout"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="PreviousButton" type="Button" parent="Shell/Root/Body/LibraryPanel/LibraryPadding/LibraryLayout/Footer"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(96, 38)
+text = "Previous"
+
+[node name="PageLabel" type="Label" parent="Shell/Root/Body/LibraryPanel/LibraryPadding/LibraryLayout/Footer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+horizontal_alignment = 1
+vertical_alignment = 1
+text = "Page 1 / 1"
+
+[node name="NextButton" type="Button" parent="Shell/Root/Body/LibraryPanel/LibraryPadding/LibraryLayout/Footer"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(96, 38)
+text = "Next"
