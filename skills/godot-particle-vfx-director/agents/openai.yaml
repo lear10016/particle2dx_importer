@@ -1,0 +1,4 @@
+interface:
+  display_name: "Godot Particle VFX Director"
+  short_description: "Build high-end Godot VFX from local particle references."
+  default_prompt: "Use $godot-particle-vfx-director to design and build a polished particle effect in this workspace using the reference scenes and textures."

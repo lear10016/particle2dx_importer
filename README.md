@@ -53,6 +53,13 @@ godot --headless \
 
 This repository includes a small Godot demo project plus sample plist files under `plist/` and generated sample scenes under `particle/`. The Asset Store release archive is kept clean with `.gitattributes` so generated GitHub archives export only the installable addon and top-level documentation.
 
+## AI Particle Practice
+
+This repository also contains an in-project AI particle workflow practice for Godot 2D particle VFX. See:
+
+- [AI_PARTICLE_PIPELINE.md](AI_PARTICLE_PIPELINE.md)
+- [skills/godot-particle-vfx-director/SKILL.md](skills/godot-particle-vfx-director/SKILL.md)
+
 To build a release archive from a committed tree:
 
 ```bash

@@ -27,7 +27,8 @@ var _particle_entries: Array[Dictionary] = []
 var _current_source_index := 0
 var _current_page := 0
 var _selected_index := -1
-var _selected_view_offset := Vector2.ZERO
+var _selected_effect_offset := Vector2.ZERO
+var _stage_base_position := Vector2.ZERO
 var _is_dragging_stage := false
 
 @onready var _summary_label: Label = %SummaryLabel
@@ -211,12 +212,12 @@ func _select_entry(index: int, change_page: bool) -> void:
 		return
 
 	_selected_index = index
-	_selected_view_offset = Vector2.ZERO
+	_selected_effect_offset = Vector2.ZERO
 	_is_dragging_stage = false
 	if change_page:
 		_current_page = int(index / ITEMS_PER_PAGE)
 
-	_apply_stage_canvas_offset()
+	_apply_stage_drag_offset()
 	_show_selected_entry()
 	_render_page()
 
@@ -247,7 +248,7 @@ func _update_stage_viewport() -> void:
 		_stage_viewport.size = viewport_size
 
 	_layout_stage_preview()
-	_apply_stage_canvas_offset()
+	_apply_stage_drag_offset()
 
 func _build_source_tabs() -> void:
 	_source_tabs.clear_tabs()
@@ -262,9 +263,9 @@ func _on_source_tab_changed(tab: int) -> void:
 	_current_source_index = tab
 	_current_page = 0
 	_selected_index = -1
-	_selected_view_offset = Vector2.ZERO
+	_selected_effect_offset = Vector2.ZERO
 	_is_dragging_stage = false
-	_apply_stage_canvas_offset()
+	_apply_stage_drag_offset()
 	_load_particle_entries()
 	if _particle_entries.is_empty():
 		_render_page()
@@ -276,10 +277,6 @@ func _center_preview(node: Node, viewport_size: Vector2i) -> void:
 	if node is Node2D:
 		_layout_preview_root(node as Node2D, node, viewport_size)
 
-func _layout_stage_preview() -> void:
-	for child in _stage_root.get_children():
-		_layout_preview_root(_stage_root, child, _stage_viewport.size)
-
 func _on_stage_viewport_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		_is_dragging_stage = event.pressed
@@ -288,25 +285,34 @@ func _on_stage_viewport_gui_input(event: InputEvent) -> void:
 		return
 
 	if event is InputEventMouseMotion and _is_dragging_stage:
-		_selected_view_offset += event.relative
-		_apply_stage_canvas_offset()
+		_selected_effect_offset += event.relative
+		_apply_stage_drag_offset()
 		accept_event()
 
-func _apply_stage_canvas_offset() -> void:
-	_stage_viewport.canvas_transform = Transform2D(0.0, _selected_view_offset)
+func _apply_stage_drag_offset() -> void:
+	_stage_viewport.canvas_transform = Transform2D.IDENTITY
+	_stage_root.position = _stage_base_position + _selected_effect_offset
 
 func _clear_stage() -> void:
 	for child in _stage_root.get_children():
 		child.queue_free()
 
 func _layout_preview_root(preview_root: Node2D, content: Node, viewport_size: Vector2i) -> void:
-	preview_root.position = Vector2.ZERO
 	preview_root.scale = Vector2.ONE
+	preview_root.position = _compute_preview_position(content, viewport_size)
+
+func _compute_preview_position(content: Node, viewport_size: Vector2i) -> Vector2:
 	var bounds := _collect_preview_bounds(content)
 	if bounds.size.is_zero_approx():
-		preview_root.position = Vector2(viewport_size) * 0.5
-		return
-	preview_root.position = Vector2(viewport_size) * 0.5 - bounds.get_center()
+		return Vector2(viewport_size) * 0.5
+	return Vector2(viewport_size) * 0.5 - bounds.get_center()
+
+func _layout_stage_preview() -> void:
+	if _stage_root.get_child_count() == 0:
+		_stage_base_position = Vector2(_stage_viewport.size) * 0.5
+	else:
+		_stage_base_position = _compute_preview_position(_stage_root.get_child(0), _stage_viewport.size)
+	_apply_stage_drag_offset()
 
 func _restart_particles(node: Node) -> void:
 	if node is GPUParticles2D:
