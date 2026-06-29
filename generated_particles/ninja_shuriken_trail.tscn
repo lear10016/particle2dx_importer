@@ -1,0 +1,30 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://generated_particles/ninja_shuriken_trail.gd" id="1_h5y3j"]
+
+[node name="NinjaShurikenTrail" type="Node2D"]
+script = ExtResource("1_h5y3j")
+
+[node name="ProjectileRig" type="Node2D" parent="."]
+
+[node name="ShadowGlow" type="Sprite2D" parent="ProjectileRig"]
+z_index = -1
+
+[node name="Body" type="Node2D" parent="ProjectileRig"]
+
+[node name="TrailCore" type="GPUParticles2D" parent="."]
+z_index = -2
+
+[node name="TrailSmoke" type="GPUParticles2D" parent="."]
+z_index = -3
+
+[node name="TrailSparks" type="GPUParticles2D" parent="."]
+z_index = -1
+
+[node name="ImpactBurst" type="GPUParticles2D" parent="."]
+
+[node name="ImpactSparks" type="GPUParticles2D" parent="."]
+
+[node name="ResetTimer" type="Timer" parent="."]
+wait_time = 0.18
+one_shot = true

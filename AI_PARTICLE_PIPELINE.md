@@ -185,10 +185,19 @@ python skills/godot-particle-vfx-director/scripts/distill_particle_knowledge.py
 - 优先借用本地已有贴图
 - 优先借用本地已有运动模式
 - 优先借用已有的层次经验
+- 如果本地没有合适贴图，先补贴图，再继续做粒子参数
 - 把新效果放到 `generated_particles/`
 - 不直接污染 `particle/` 参考库
 
 这也是 [skills/godot-particle-vfx-director/SKILL.md](D:/workspace/godot-tool/particle2dx_importer/skills/godot-particle-vfx-director/SKILL.md) 里明确规定的方向。
+
+这里新增了一条重要原则：
+
+- 如果本地素材库里没有合适的特效贴图，AI 不应该硬拿错误贴图凑效果
+- 可以先去外部寻找合适的透明背景特效贴图
+- 也可以先生成一张新的位图特效贴图，再回到 Godot 里做粒子还原
+
+也就是说，当前技术实践允许“素材先行补足”，而不是被本地参考库完全锁死。
 
 ### 4.2 当前“生成结果”是如何落地的
 
@@ -340,7 +349,7 @@ python skills/godot-particle-vfx-director/scripts/distill_particle_knowledge.py
    当前质量把控仍然需要人工结合 Godot 预览来完成。
 
 4. 还没有针对贴图生成的专门工具链  
-   当前主要优先复用本地贴图；如果贴图不合适，仍然需要额外补图或新建素材。
+   当前主要优先复用本地贴图；如果贴图不合适，可以额外找图或生成新贴图，但还没有沉淀成统一的自动化贴图管线。
 
 ## 7. 当前这套实践的核心价值
 
